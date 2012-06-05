@@ -1,0 +1,7 @@
+<meta http-equiv='Content-Type'content='text/html;charset=UTF-8'/>
+<body style="background-image: url(background.jpg);">
+<h4><font color='#66CCCC'> Ultimate Jail Break Manager example motd!</font>
+</h4><font color=#6699CC><h2>Server rules:</h2>
+<h4>1. Killing a prisoner without a reason is restricted!<br>
+2. <b>Play for fun, not for frags<b>
+<br>3. etc. <br>
