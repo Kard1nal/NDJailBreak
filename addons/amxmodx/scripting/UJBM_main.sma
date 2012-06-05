@@ -3255,7 +3255,6 @@ if (g_Simon == id || is_user_admin(id))
 	formatex(menuname, charsmax(menuname), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU")
 	menu = menu_create(menuname, "simon_choice")
 	
-	
 	formatex(option, charsmax(option), "\r%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_OPEN")
 	menu_additem(menu, option, "1", 0)
 	
@@ -3277,10 +3276,7 @@ if (g_Simon == id || is_user_admin(id))
 	
 	formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_VOICE")
 	menu_additem(menu, option, "4", 0)
-	
-	formatex(option, charsmax(option), "\y%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_GONG")
-	menu_additem(menu, option, "5", 0)
-	
+		
 	formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_PUNISH")
 	menu_additem(menu, option, "6", 0)
 	
