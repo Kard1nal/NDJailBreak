@@ -3679,7 +3679,7 @@ public give_items_alien()
 
 
 
-public  cmd_game_alien2()
+/* public  cmd_game_alien2()
 {
 	if (g_Simon == 0) return PLUGIN_HANDLED
 	g_nogamerounds = 0
@@ -3745,11 +3745,11 @@ public  cmd_game_alien2()
 	set_task(5.0, "stop_sound")
 	
 	return PLUGIN_HANDLED
-}
+} */
 
 
 
-public  cmd_game_gordon()
+/* public  cmd_game_gordon()
 {
 	if (g_Simon == 0) return PLUGIN_HANDLED
 	g_nogamerounds = 0
@@ -3803,7 +3803,7 @@ public  cmd_game_gordon()
 	
 	
 	
-	new hp = get_pcvar_num(gp_GameHP)
+/* 	new hp = get_pcvar_num(gp_GameHP)
 	if (hp < 20) hp = 200
 	
 	set_user_maxspeed(g_Simon, 320.0)
@@ -3823,7 +3823,7 @@ public give_items_gordon()
 	give_item(g_Simon, "weapon_flashbang")
 	current_weapon_fl(g_Simon)
 }
-
+ */
 
 
 public  cmd_punish_ct(id, menu, item)
