@@ -389,6 +389,8 @@ precache_sound("debris/metal2.wav")
 precache_sound("items/gunpickup2.wav")
 precache_sound("weapons/cbar_hit1.wav")
 precache_sound("weapons/cbar_miss1.wav")
+precache_sound("jbextreme/box.mp3")
+
 	
 	
 	
@@ -1489,6 +1491,7 @@ public cmd_box(id)
 			set_cvar_num("mp_tkpunish", 0)
 			set_cvar_num("mp_friendlyfire", 1)
 			g_BoxStarted = 1
+			emit_sound(0, CHAN_AUTO, "jbextreme/box.mp3", 1.0, ATTN_NORM, 0, PITCH_NORM)
 			player_hudmessage(0, 1, 3.0, _, "%L", LANG_SERVER, "UJBM_GUARD_BOX")
 		}
 		else
