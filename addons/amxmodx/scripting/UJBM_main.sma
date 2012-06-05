@@ -1,4 +1,3 @@
-
 #include <amxmodx>
 #include <amxmisc>
 #include <engine>
@@ -7,10 +6,10 @@
 #include <fun>
 #include <cstrike>
 
-#define PLUGIN_NAME	"[UJBM] Main"
-#define PLUGIN_AUTHOR	"R_O_O_T"
+#define PLUGIN_NAME	"[ND.JBM] Main"
+#define PLUGIN_AUTHOR	"ND.TEAM"
 #define PLUGIN_VERSION	"1.0"
-#define PLUGIN_CVAR	"Ultimate JailBreak Manager"
+#define PLUGIN_CVAR	"ND JailBreak Manager"
 
 #define TASK_STATUS	2487000
 #define TASK_FREEDAY	2487100
@@ -38,9 +37,9 @@
 #define m_fGameHUDInitialized	349
 #define m_fNextHudTextArgsGameTime	198
 
-#define FLASHCOST	12000
+#define GRENCOST	10000
 #define HECOST	12000
-#define SMOKECOST	10000
+#define CHAINCOST	14000
 #define SHIELDCOST	16000
 #define FDCOST	12000
 #define CROWBARCOST	16000
@@ -290,7 +289,6 @@ register_clcmd("-simonvoice", "cmd_voiceoff")
 
 register_clcmd("say /voice", "cmd_simon_micr")	
 register_clcmd("say /micr", "cmd_simon_micr")	
-register_clcmd("say /shop", "cmd_shop")
 register_clcmd("say /fd", "cmd_freeday")
 register_clcmd("say /menu", "cmd_simonmenu")
 
@@ -2644,7 +2642,7 @@ public  cmd_game_hns()
 }
 
 
-public cmd_shop(id)
+/* public cmd_shop(id)
 	
 {
 
@@ -2672,13 +2670,13 @@ if(cs_get_user_team(id) == CS_TEAM_T)
 	
 	if (containi(Tallowed,"b") >= 0)
 	{
-		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SHOP_FLASHBANG", FLASHCOST)
+		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SHOP_GRENAGES", GRENCOST)
 		menu_additem(menu, option, "2", 0)
 	}
 	
 	if (containi(Tallowed,"c") >= 0)
 	{
-		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SHOP_SMOKE", SMOKECOST)
+		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SHOP_CHAIN", CHAINCOST)
 		menu_additem(menu, option, "3", 0)
 	}
 	
@@ -2787,10 +2785,13 @@ public shop_choice_T(id, menu, item)
 	{
 		case('2'):
 		{
-			if (money >= FLASHCOST) 
+			if (money >= GRENCOST) 
 			{
-				cs_set_user_money (id, money - FLASHCOST, 0)
+				cs_set_user_money (id, money - GRENCOST, 0)
+				give_item(id, "weapon_hegrenade")
 				give_item(id, "weapon_flashbang")
+				give_item(id, "weapon_flashbang")
+				give_item(id, "weapon_smokegrenade")
 			}
 			
 			else
@@ -2822,9 +2823,9 @@ public shop_choice_T(id, menu, item)
 	
 	case('3'):
 	{
-		if (money >= SMOKECOST) 
+		if (money >= CHAINCOST) 
 		{
-			cs_set_user_money (id, money - SMOKECOST, 0)
+			cs_set_user_money (id, money - CHAINCOST, 0)
 			give_item(id, "weapon_smokegrenade")
 		}
 		
@@ -3072,15 +3073,16 @@ switch(data[0])
 if (!get_bit(g_NoShowShop, id)) cmd_shop(id)
 return PLUGIN_HANDLED
 }
+ */
 
 
+public cmd_shop(id)
+{
+client_cmd(id, "say /shop")
+}
 
 
-
-
-
-/*
-public cmd_football(id)
+/* public cmd_football(id)
 {
 if (g_Simon == id || is_user_admin(id)) 
 {
