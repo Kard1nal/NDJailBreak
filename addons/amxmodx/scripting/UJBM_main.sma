@@ -3318,39 +3318,27 @@ get_user_name(id, dst, charsmax(dst))
 
 switch(data[0])
 {
-	
 	case('1'):
-	{
-		
-		if (GameAllowed() || is_user_admin(id)) cmd_game_alien2()
-	}
-	
-	case'2':
 	{
 		if (GameAllowed() || is_user_admin(id))cmd_game_zombie()
 	}
 	
-	case('3'): 
+	case('2'): 
 	{
 		if (GameAllowed() || is_user_admin(id)) cmd_game_hns()
 	}
 	
-	case('4'):
+	case('3'):
 	{
 		if (GameAllowed() || is_user_admin(id)) cmd_game_alien()
 	}
 	
-	case('7'):
-	{
-		if (GameAllowed() || is_user_admin(id)) cmd_game_gordon()
-	}
-	
-	case('5'):
+	case('4'):
 	{
 		if (id == g_Simon || is_user_admin(id)) cmd_box(id)
 	}
 	
-	case('6'):
+	case('5'):
 	{
 		if (id == g_Simon || is_user_admin(id)) cmd_footballmenu(id)
 	}
@@ -3441,49 +3429,38 @@ if ((g_Simon == id || is_user_admin(id)) && g_GameMode <= 1)
 	
 	if (GameAllowed() || is_user_admin(id))
 	{
-		if (containi(allowed,"a") >= 0)
-		{
-			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_ALIEN2")
-			menu_additem(menu, option, "1", 0)
-		}
-		
 		if (containi(allowed,"b") >= 0)
 		{	
 			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_ZM")
-			menu_additem(menu, option, "2", 0)
+			menu_additem(menu, option, "1", 0)
 		}
 		if (containi(allowed,"c") >= 0)
 		{	
 			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_HNS")
-			menu_additem(menu, option, "3", 0)
+			menu_additem(menu, option, "2", 0)
 		}
 		if (containi(allowed,"d") >= 0)
 		{	
 			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_SIMON_ALIEN")
-			menu_additem(menu, option, "4", 0)
+			menu_additem(menu, option, "3", 0)
 		}
 	}
 	else
 	{
-		if (containi(allowed,"a") >= 0)
-		{
-			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_ALIEN2")
-			menu_additem(menu, option, "1", 0)
-		}
 		if (containi(allowed,"b") >= 0)
 		{	
 			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_ZM")
-			menu_additem(menu, option, "2", 0)
+			menu_additem(menu, option, "1", 0)
 		}
 		if (containi(allowed,"c") >= 0)
 		{	
 			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_HNS")
-			menu_additem(menu, option, "3", 0)
+			menu_additem(menu, option, "2", 0)
 		}
 		if (containi(allowed,"d") >= 0)
 		{	
 			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_SIMON_ALIEN")
-			menu_additem(menu, option, "4", 0)
+			menu_additem(menu, option, "3", 0)
 		}
 		
 		
@@ -3499,14 +3476,7 @@ if ((g_Simon == id || is_user_admin(id)) && g_GameMode <= 1)
 		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_FOOTBALL")
 		menu_additem(menu, option, "6", 0)
 	}
-	
-	if (containi(allowed,"g") >= 0)
-	{	
-		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_SIMON_GORDON")
-		menu_additem(menu, option, "7", 0)
-	}
-	
-	
+		
 	menu_display(id, menu)
 	
 	
@@ -3674,10 +3644,6 @@ public give_items_alien()
 	current_weapon(g_Simon)
 	
 }
-
-
-
-
 
 /* public  cmd_game_alien2()
 {
@@ -4261,6 +4227,9 @@ public Showcl_min(id) {
 	
 	}
 
+	
+	
+	
 public cl_choice(id, menu, item) {
 {
 if(item == MENU_EXIT)
