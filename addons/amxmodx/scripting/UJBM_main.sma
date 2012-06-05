@@ -85,7 +85,6 @@ new gp_NoGame
 new gp_Motd
 new gp_TShop
 new gp_CTShop
-new gp_GameHP
 new gp_Games
 new gp_ShowColor
 new gp_Effects
@@ -329,7 +328,6 @@ gp_Games = register_cvar("jb_games", "abcdef")
 gp_Bind = register_cvar("jb_bindkey","v")
 gp_Help = register_cvar("jb_autohelp","2")
 gp_FDLength = register_cvar("jb_fdlen","120.0")
-gp_GameHP = register_cvar("jb_hpmultiplier","200")
 gp_ShowColor = register_cvar("jb_hud_showcolor","1")
 gp_ShowFD = register_cvar("jb_hud_showfd","1")
 gp_ShowWanted = register_cvar("jb_hud_show_wanted","1")
@@ -3318,39 +3316,27 @@ get_user_name(id, dst, charsmax(dst))
 
 switch(data[0])
 {
-	
 	case('1'):
-	{
-		
-		if (GameAllowed() || is_user_admin(id)) cmd_game_alien2()
-	}
-	
-	case'2':
 	{
 		if (GameAllowed() || is_user_admin(id))cmd_game_zombie()
 	}
 	
-	case('3'): 
+	case('2'): 
 	{
 		if (GameAllowed() || is_user_admin(id)) cmd_game_hns()
 	}
 	
-	case('4'):
+	case('3'):
 	{
 		if (GameAllowed() || is_user_admin(id)) cmd_game_alien()
 	}
 	
-	case('7'):
-	{
-		if (GameAllowed() || is_user_admin(id)) cmd_game_gordon()
-	}
-	
-	case('5'):
+	case('4'):
 	{
 		if (id == g_Simon || is_user_admin(id)) cmd_box(id)
 	}
 	
-	case('6'):
+	case('5'):
 	{
 		if (id == g_Simon || is_user_admin(id)) cmd_footballmenu(id)
 	}
@@ -3441,49 +3427,38 @@ if ((g_Simon == id || is_user_admin(id)) && g_GameMode <= 1)
 	
 	if (GameAllowed() || is_user_admin(id))
 	{
-		if (containi(allowed,"a") >= 0)
-		{
-			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_ALIEN2")
-			menu_additem(menu, option, "1", 0)
-		}
-		
 		if (containi(allowed,"b") >= 0)
 		{	
 			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_ZM")
-			menu_additem(menu, option, "2", 0)
+			menu_additem(menu, option, "1", 0)
 		}
 		if (containi(allowed,"c") >= 0)
 		{	
 			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_HNS")
-			menu_additem(menu, option, "3", 0)
+			menu_additem(menu, option, "2", 0)
 		}
 		if (containi(allowed,"d") >= 0)
 		{	
 			formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_SIMON_ALIEN")
-			menu_additem(menu, option, "4", 0)
+			menu_additem(menu, option, "3", 0)
 		}
 	}
 	else
 	{
-		if (containi(allowed,"a") >= 0)
-		{
-			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_ALIEN2")
-			menu_additem(menu, option, "1", 0)
-		}
 		if (containi(allowed,"b") >= 0)
 		{	
 			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_ZM")
-			menu_additem(menu, option, "2", 0)
+			menu_additem(menu, option, "1", 0)
 		}
 		if (containi(allowed,"c") >= 0)
 		{	
 			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_HNS")
-			menu_additem(menu, option, "3", 0)
+			menu_additem(menu, option, "2", 0)
 		}
 		if (containi(allowed,"d") >= 0)
 		{	
 			formatex(option, charsmax(option), "\d%L\w", LANG_SERVER, "UJBM_MENU_SIMONMENU_SIMON_ALIEN")
-			menu_additem(menu, option, "4", 0)
+			menu_additem(menu, option, "3", 0)
 		}
 		
 		
@@ -3499,14 +3474,7 @@ if ((g_Simon == id || is_user_admin(id)) && g_GameMode <= 1)
 		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_FOOTBALL")
 		menu_additem(menu, option, "6", 0)
 	}
-	
-	if (containi(allowed,"g") >= 0)
-	{	
-		formatex(option, charsmax(option), "%L", LANG_SERVER, "UJBM_MENU_SIMONMENU_SIMON_GORDON")
-		menu_additem(menu, option, "7", 0)
-	}
-	
-	
+		
 	menu_display(id, menu)
 	
 	
@@ -3674,157 +3642,6 @@ public give_items_alien()
 	current_weapon(g_Simon)
 	
 }
-
-
-
-
-
-/* public  cmd_game_alien2()
-{
-	if (g_Simon == 0) return PLUGIN_HANDLED
-	g_nogamerounds = 0
-	g_BoxStarted = 0
-	jail_open()
-	g_GameMode = 5
-	server_cmd("jb_block_weapons")
-	server_cmd("jb_block_teams")
-	hud_status(0)
-	
-	new Players[32] 
-	new playerCount, i 
-	get_players(Players, playerCount, "ac")
-	for (i=0; i<playerCount; i++) 
-	{
-		
-		strip_user_weapons(Players[i])
-		if ( g_Simon != Players[i])
-		{
-			if (cs_get_user_team(Players[i]) == CS_TEAM_CT)
-			{
-				set_bit(g_BackToCT, Players[i])
-				cs_set_user_team2(Players[i], CS_TEAM_T)
-			}
-			give_item(Players[i], "weapon_knife")
-			new j = random_num(0, sizeof(_WeaponsFree) - 1)
-			
-			give_item(Players[i], _WeaponsFree[j])
-			cs_set_user_bpammo(Players[i], _WeaponsFreeCSW[j], _WeaponsFreeAmmo[j])
-			/// give two random guns
-			
-			new n = random_num(0, sizeof(_WeaponsFree) - 1)
-			while (n == j) { 
-				n = random_num(0, sizeof(_WeaponsFree) - 1) 
-			}
-			
-			give_item(Players[i], _WeaponsFree[n])
-			cs_set_user_bpammo(Players[i], _WeaponsFreeCSW[n], _WeaponsFreeAmmo[n])
-		}
-		
-	}
-	set_user_rendering(g_Simon, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 0 )
-	message_begin(MSG_ONE, get_user_msgid("ScreenFade"), {0,0,0}, g_Simon)
-	write_short(~0)
-	write_short(~0)
-	write_short(0x0004) // stay faded
-	write_byte(ALIEN_RED)
-	write_byte(ALIEN_GREEN)
-	write_byte(ALIEN_BLUE)
-	write_byte(100)
-	message_end()
-	set_user_maxspeed(g_Simon, 320.0)
-	entity_set_int(g_Simon, EV_INT_body, 5)
-	new hp = get_pcvar_num(gp_GameHP)
-	if (hp < 20) hp = 200
-	
-	set_user_health(g_Simon, hp*playerCount)
-	set_task(20.0, "give_items_alien", TASK_GIVEITEMS)
-	
-	set_lights("z")
-	emit_sound(0, CHAN_VOICE, "alien_alarm.wav", 1.0, ATTN_NORM, 0, PITCH_LOW)
-	set_task(2.5, "radar_alien", 666, _, _, "b")
-	set_task(5.0, "stop_sound")
-	
-	return PLUGIN_HANDLED
-} */
-
-
-
-/* public  cmd_game_gordon()
-{
-	if (g_Simon == 0) return PLUGIN_HANDLED
-	g_nogamerounds = 0
-	g_BoxStarted = 0
-	jail_open()
-	g_GameMode = 6
-	server_cmd("jb_block_weapons")
-	server_cmd("jb_block_teams")
-	hud_status(0)
-	
-	new Players[32] 
-	new playerCount, i 
-	get_players(Players, playerCount, "ac")
-	for (i=0; i<playerCount; i++) 
-	{
-		strip_user_weapons(Players[i])
-		if ( g_Simon != Players[i])
-		{
-			if (cs_get_user_team(Players[i]) == CS_TEAM_CT)
-			{
-				set_bit(g_BackToCT, Players[i])
-				cs_set_user_team2(Players[i], CS_TEAM_T)
-			}
-			give_item(Players[i], "weapon_knife")
-			new j = random_num(0, sizeof(_WeaponsFree) - 1)
-			
-			give_item(Players[i], _WeaponsFree[j])
-			cs_set_user_bpammo(Players[i], _WeaponsFreeCSW[j], _WeaponsFreeAmmo[j])
-			/// give two random guns
-			
-			new n = random_num(0, sizeof(_WeaponsFree) - 1)
-			while (n == j) { 
-				n = random_num(0, sizeof(_WeaponsFree) - 1) 
-			}
-			
-			give_item(Players[i], _WeaponsFree[n])
-			cs_set_user_bpammo(Players[i], _WeaponsFreeCSW[n], _WeaponsFreeAmmo[n])
-		}
-		
-	}
-	
-	//entity_set_int(g_Simon, EV_INT_body, 1)
-	//entity_set_int(g_Simon, EV_INT_skin, 0)
-	//client_cmd(g_Simon,"model gordon");
-	set_user_info(g_Simon, "model", "gordon")
-	/*	entity_set_int(g_Simon, EV_INT_skin, 0)
-	entity_set_int(g_Simon, EV_INT_body, 1)
-	entity_set_int(g_Simon, EV_INT_fixangle, 1);
-	entity_set_int(g_Simon, EV_INT_playerclass, 1);
-	*/
-	
-	
-	
-/* 	new hp = get_pcvar_num(gp_GameHP)
-	if (hp < 20) hp = 200
-	
-	set_user_maxspeed(g_Simon, 320.0)
-	set_user_health(g_Simon,  hp*playerCount)
-	set_task(5.0, "give_items_gordon", TASK_GIVEITEMS)
-	
-	set_lights("z")
-	emit_sound(0, CHAN_VOICE, "alien_alarm.wav", 1.0, ATTN_NORM, 0, PITCH_LOW)
-	set_task(5.0, "stop_sound")
-	
-	return PLUGIN_HANDLED
-}
-
-public give_items_gordon()
-{
-	//give_item(g_Simon, "weapon_knife")
-	give_item(g_Simon, "weapon_flashbang")
-	current_weapon_fl(g_Simon)
-}
- */
-
 
 public  cmd_punish_ct(id, menu, item)
 {
@@ -4261,6 +4078,9 @@ public Showcl_min(id) {
 	
 	}
 
+	
+	
+	
 public cl_choice(id, menu, item) {
 {
 if(item == MENU_EXIT)
