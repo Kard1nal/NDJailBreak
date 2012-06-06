@@ -84,7 +84,6 @@ new gc_ButtonShoot
 new Float:gc_CrowbarMul
 
 // Precache
-new const _FistModels[][] = { "models/p_bknuckles.mdl", "models/v_bknuckles.mdl" }
 new const _CrowbarModels[][] = { "models/p_crowbar.mdl", "models/v_crowbar.mdl" }
 new const _FistSounds[][] = { "weapons/cbar_hitbod2.wav", "weapons/cbar_hitbod1.wav", "weapons/bullet_hit1.wav", "weapons/bullet_hit2.wav" }
 new const _RemoveEntities[][] = {
